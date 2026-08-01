@@ -1,11 +1,11 @@
 #include <iostream>
 #include <cstring>
 
-// Intentional Buffer Overflow vulnerability for testing AEGIS-PATCH LLM SAST
 void copyUserInput(const char* input) {
     char buffer[10];
-    // Vulnerable: strcpy does not check bounds
-    std::strcpy(buffer, input);
+    // Fixed: strncpy checks bounds and prevents overflow
+    std::strncpy(buffer, input, 10);
+    buffer[9] = '\0'; // Ensure null-termination
     std::cout << "Input copied: " << buffer << std::endl;
 }
 
