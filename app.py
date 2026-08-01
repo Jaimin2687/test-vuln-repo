@@ -11,11 +11,9 @@ def login():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
     
-    # Intentional SQL Injection vulnerability for testing AEGIS-PATCH LLM SAST
-    query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
-    
+    query = "SELECT * FROM users WHERE username = ? AND password = ?"
     try:
-        cursor.execute(query)
+        cursor.execute(query, (username, password))
         user = cursor.fetchone()
         
         if user:
