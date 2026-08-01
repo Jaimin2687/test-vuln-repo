@@ -1,11 +1,12 @@
 #include <iostream>
 #include <cstring>
+#include <cstdio> // Required for snprintf
 
 // Intentional Buffer Overflow vulnerability for testing AEGIS-PATCH LLM SAST
 void copyUserInput(const char* input) {
     char buffer[10];
-    // Vulnerable: strcpy does not check bounds
-    std::strcpy(buffer, input);
+    // Patched: Use snprintf to prevent buffer overflow and ensure null termination
+    std::snprintf(buffer, sizeof(buffer), "%s", input);
     std::cout << "Input copied: " << buffer << std::endl;
 }
 
